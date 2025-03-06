@@ -26,9 +26,8 @@ const RegisterScreen = () => {
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isChecked, setChecked] = useState(false);
 
-  // Função para formatar o CPF automaticamente
   const formatCpf = (text: string) => {
-    const cleaned = text.replace(/\D/g, ""); // Remove não numéricos
+    const cleaned = text.replace(/\D/g, "");
     let formatted = cleaned;
     if (cleaned.length > 3) formatted = cleaned.replace(/^(\d{3})(\d)/, "$1.$2");
     if (cleaned.length > 6) formatted = formatted.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
@@ -65,18 +64,22 @@ const RegisterScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Nome"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Sobrenome"
-        value={surname}
-        onChangeText={setSurname}
-      />
+      {/* Nome e Sobrenome no mesmo Row */}
+      <View style={styles.row}>
+        <TextInput
+          style={[styles.input, styles.halfInput]}
+          placeholder="Nome"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={[styles.input, styles.halfInput]}
+          placeholder="Sobrenome"
+          value={surname}
+          onChangeText={setSurname}
+        />
+      </View>
+
       <TextInput
         style={styles.input}
         placeholder="Data de Nascimento (DD/MM/AAAA)"
@@ -144,6 +147,11 @@ const RegisterScreen = () => {
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
+
+      {/* Botão de Voltar para o Login */}
+      <TouchableOpacity style={styles.backButton} onPress={() => router.replace("/auth/Login")}>
+        <Text style={styles.backButtonText}>Já tem uma conta? Faça login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -160,6 +168,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  halfInput: {
+    width: "48%",
   },
   input: {
     height: 50,
@@ -195,9 +210,18 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
+    marginBottom: 10,
   },
   buttonText: {
     color: "#fff",
+    fontWeight: "bold",
+  },
+  backButton: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  backButtonText: {
+    color: "#FF5733",
     fontWeight: "bold",
   },
 });
