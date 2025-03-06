@@ -29,14 +29,41 @@ const RegisterScreen = () => {
   const formatCpf = (text: string) => {
     const cleaned = text.replace(/\D/g, "");
     let formatted = cleaned;
-    if (cleaned.length > 3) formatted = cleaned.replace(/^(\d{3})(\d)/, "$1.$2");
-    if (cleaned.length > 6) formatted = formatted.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
-    if (cleaned.length > 9) formatted = formatted.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+    if (cleaned.length > 3)
+      formatted = cleaned.replace(/^(\d{3})(\d)/, "$1.$2");
+    if (cleaned.length > 6)
+      formatted = formatted.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+    if (cleaned.length > 9)
+      formatted = formatted.replace(
+        /^(\d{3})\.(\d{3})\.(\d{3})(\d)/,
+        "$1.$2.$3-$4"
+      );
+    return formatted;
+  };
+
+  const formatDate = (text: string) => {
+    const cleaned = text.replace(/\D/g, ""); // Remove não numéricos
+    let formatted = cleaned;
+
+    if (cleaned.length > 2)
+      formatted = cleaned.replace(/^(\d{2})(\d)/, "$1/$2");
+    if (cleaned.length > 4)
+      formatted = formatted.replace(/^(\d{2})\/(\d{2})(\d)/, "$1/$2/$3");
+
     return formatted;
   };
 
   const handleRegister = () => {
-    if (!name || !surname || !dob || !phone || !cpf || !email || !password || !confirmPassword) {
+    if (
+      !name ||
+      !surname ||
+      !dob ||
+      !phone ||
+      !cpf ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
       Alert.alert("Erro", "Todos os campos são obrigatórios!");
       return;
     }
@@ -52,7 +79,10 @@ const RegisterScreen = () => {
     }
 
     if (!isChecked) {
-      Alert.alert("Erro", "Você precisa aceitar os Termos de Uso para continuar.");
+      Alert.alert(
+        "Erro",
+        "Você precisa aceitar os Termos de Uso para continuar."
+      );
       return;
     }
 
@@ -84,9 +114,11 @@ const RegisterScreen = () => {
         style={styles.input}
         placeholder="Data de Nascimento (DD/MM/AAAA)"
         value={dob}
-        onChangeText={setDob}
+        onChangeText={(text) => setDob(formatDate(text))}
         keyboardType="numeric"
+        maxLength={10}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Celular"
@@ -120,8 +152,14 @@ const RegisterScreen = () => {
           onChangeText={setPassword}
           secureTextEntry={!isPasswordVisible}
         />
-        <TouchableOpacity onPress={() => setPasswordVisible(!isPasswordVisible)}>
-          <Ionicons name={isPasswordVisible ? "eye-off" : "eye"} size={20} color="gray" />
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!isPasswordVisible)}
+        >
+          <Ionicons
+            name={isPasswordVisible ? "eye-off" : "eye"}
+            size={20}
+            color="gray"
+          />
         </TouchableOpacity>
       </View>
 
@@ -134,14 +172,22 @@ const RegisterScreen = () => {
           onChangeText={setConfirmPassword}
           secureTextEntry={!isConfirmPasswordVisible}
         />
-        <TouchableOpacity onPress={() => setConfirmPasswordVisible(!isConfirmPasswordVisible)}>
-          <Ionicons name={isConfirmPasswordVisible ? "eye-off" : "eye"} size={20} color="gray" />
+        <TouchableOpacity
+          onPress={() => setConfirmPasswordVisible(!isConfirmPasswordVisible)}
+        >
+          <Ionicons
+            name={isConfirmPasswordVisible ? "eye-off" : "eye"}
+            size={20}
+            color="gray"
+          />
         </TouchableOpacity>
       </View>
 
       <View style={styles.checkboxContainer}>
         <Checkbox value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.checkboxText}>Li e aceito os Termos de Uso e Privacidade</Text>
+        <Text style={styles.checkboxText}>
+          Li e aceito os Termos de Uso e Privacidade
+        </Text>
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
@@ -149,7 +195,10 @@ const RegisterScreen = () => {
       </TouchableOpacity>
 
       {/* Botão de Voltar para o Login */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.replace("/auth/Login")}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.replace("/auth/Login")}
+      >
         <Text style={styles.backButtonText}>Já tem uma conta? Faça login</Text>
       </TouchableOpacity>
     </View>
