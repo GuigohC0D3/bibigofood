@@ -35,7 +35,6 @@ const RegisterScreen = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Cadastro</Text>
-
             <TextInput
                 style={styles.input}
                 placeholder="Nome"
