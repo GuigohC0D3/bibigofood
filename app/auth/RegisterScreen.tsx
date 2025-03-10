@@ -197,7 +197,7 @@ const RegisterScreen = () => {
       {/* Botão de Voltar para o Login */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.replace("/auth/Login")}
+        onPress={() => router.replace("/auth/login")}
       >
         <Text style={styles.backButtonText}>Já tem uma conta? Faça login</Text>
       </TouchableOpacity>

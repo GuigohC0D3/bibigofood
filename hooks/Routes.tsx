@@ -4,6 +4,6 @@ const router = useRouter();
 
 router.push("/preloading");
 router.push("/welcome");
-router.push("/auth/Login");
+router.push("/auth/login");
 router.push("/auth/forgot-password")
 router.push("/auth/RegisterScreen");
