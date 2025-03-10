@@ -7,7 +7,7 @@ const PreloadingScreen = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            router.push('/tabs'); // Redireciona para a página principal após o loading
+            router.push('/(tabs)'); // Redireciona para a página principal após o loading
         }, 2000); // Simula um loading de 2 segundos
     }, []);
 
