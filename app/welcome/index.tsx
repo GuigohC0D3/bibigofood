@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
@@ -11,7 +12,7 @@ export default function WelcomeScreen() {
 
     setTimeout(() => {
       console.log("Redirecionando para Cadastro...");
-      router.replace("/auth/Login");
+      router.replace("/auth/login");
     }, 5000);
   }, []);
 
