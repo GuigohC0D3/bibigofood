@@ -10,9 +10,13 @@ import {
 import { useRouter } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../auth/authContext";
+
 
 const RegisterScreen = () => {
   const router = useRouter();
+  const { register } = useAuth();
+
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -53,42 +57,36 @@ const RegisterScreen = () => {
     return formatted;
   };
 
-  const handleRegister = () => {
-    if (
-      !name ||
-      !surname ||
-      !dob ||
-      !phone ||
-      !cpf ||
-      !email ||
-      !password ||
-      !confirmPassword
-    ) {
-      Alert.alert("Erro", "Todos os campos são obrigatórios!");
-      return;
+  const handleRegister = async () => {
+    if (!name || !surname || !dob || !phone || !cpf || !email || !password || !confirmPassword) {
+        Alert.alert("Erro", "Todos os campos são obrigatórios!");
+        return;
     }
 
     if (cpf.length < 14) {
-      Alert.alert("Erro", "CPF inválido!");
-      return;
+        Alert.alert("Erro", "CPF inválido!");
+        return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Erro", "As senhas não coincidem!");
-      return;
+        Alert.alert("Erro", "As senhas não coincidem!");
+        return;
     }
 
     if (!isChecked) {
-      Alert.alert(
-        "Erro",
-        "Você precisa aceitar os Termos de Uso para continuar."
-      );
-      return;
+        Alert.alert("Erro", "Você precisa aceitar os Termos de Uso para continuar.");
+        return;
     }
 
-    Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-    router.replace("/welcome");
-  };
+    try {
+        await register(email, password);
+        Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+        router.replace("/auth/login");
+    } catch (error) {
+        Alert.alert("Erro", error instanceof Error ? error.message : "Falha no cadastro. Tente novamente.");
+    }
+};
+
 
   return (
     <View style={styles.container}>

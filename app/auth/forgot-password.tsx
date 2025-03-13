@@ -9,25 +9,26 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
+import { useAuth } from "../auth/authContext";
 
 export default function ForgotPasswordScreen() {
   const router = useRouter();
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     if (!email) {
       Alert.alert("Erro", "Por favor, insira seu e-mail!");
       return;
     }
 
-    // Simula um envio de recuperação de senha
-    Alert.alert(
-      "Sucesso",
-      "Um link de recuperação foi enviado para seu e-mail!"
-    );
-
-    // Opcionalmente, redireciona para a tela de login
-    router.replace("/auth/Login");
+    try {
+      await resetPassword(email);
+      Alert.alert("Sucesso", "Um link de recuperação foi enviado para seu e-mail!");
+      router.replace("/auth/login");
+    } catch (error) {
+      Alert.alert("Erro", "Erro ao enviar e-mail de recuperação.");
+    }
   };
 
   return (
@@ -51,7 +52,7 @@ export default function ForgotPasswordScreen() {
       </TouchableOpacity>
 
       {/* Voltar para Login */}
-      <TouchableOpacity onPress={() => router.push("/auth/Login")}>
+      <TouchableOpacity onPress={() => router.push("/auth/login")}>
         <Text style={styles.linkText}>Voltar para o Login</Text>
       </TouchableOpacity>
     </View>
