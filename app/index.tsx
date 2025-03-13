@@ -7,20 +7,21 @@ export default function PreloadingScreen() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("preloading iniciado...");
+    console.log("Preloading iniciado...");
 
     setTimeout(() => {
-      console.log("REdirecionando para Welcome...");
-      router.replace("/welcome"); // Redireciona para a tela de Boas-Vindas
-    }, 10000);
+      console.log("Redirecionando para Welcome...");
+      router.replace("/welcome");
+    }, 5000); // 5 segundos para o preloading
   }, []);
 
   return (
     <View style={styles.container}>
       <LottieView
-        source={require("../../assets/animations/new_loading_animation.json")} // Caminho correto para o JSON da animação
+        source={require("../assets/animations/Animation - 1741117436008.json")}
         autoPlay
         loop
+        style={styles.animation}
       />
     </View>
   );
@@ -32,5 +33,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+  },
+  animation: {
+    width: 200,
+    height: 200,
   },
 });
