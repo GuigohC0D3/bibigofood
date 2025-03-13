@@ -9,7 +9,8 @@ interface AuthContextType {
   resetPassword: (email: string) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | null>(null);
+
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(null);
@@ -84,3 +85,6 @@ export const useAuth = () => {
   }
   return context;
 };
+export default AuthProvider;
+
+
