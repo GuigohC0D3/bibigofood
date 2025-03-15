@@ -54,7 +54,7 @@ export default function HomePage() {
     },
     {
       id: 3,
-      name: "Burguer King",
+      name: "Bibigo Burguer's",
       image: "https://via.placeholder.com/150?text=Burguer",
       description: "Combos incríveis para você",
     },

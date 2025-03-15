@@ -9,4 +9,5 @@ router.push("/auth/forgot-password");
 router.push("/auth/RegisterScreen");
 router.push("/auth/authContext");
 router.push("/homepage")
+router.push("/store/${store.id}")
 
