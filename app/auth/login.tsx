@@ -1,12 +1,28 @@
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
+import { useAuth } from "../auth/authContext";
 
 export default function LoginScreen() {
     const router = useRouter();
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleLogin = async () => {
+        if (!email || !password) {
+            Alert.alert("Erro", "Por favor, preencha todos os campos!");
+            return;
+        }
+
+        try {
+            await login(email, password);
+            router.replace("/homepage");
+        } catch (error) {
+            Alert.alert("Erro", error instanceof Error ? error.message : "Credenciais inválidas!");
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -34,7 +50,7 @@ export default function LoginScreen() {
             />
 
             {/* Botão de Login */}
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
 

@@ -1,6 +1,11 @@
-import { Stack } from 'expo-router';
-import React from 'react';
+import React from "react";
+import AuthProvider from "./auth/authContext"; // Importação corrigida
+import { Stack } from "expo-router";
 
-export default function Layout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+export default function App() {
+  return (
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
+  );
 }

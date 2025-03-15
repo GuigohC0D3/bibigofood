@@ -10,9 +10,11 @@ import {
 import { useRouter } from "expo-router";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../auth/authContext";
 
 const RegisterScreen = () => {
   const router = useRouter();
+  const { register } = useAuth();
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -53,7 +55,8 @@ const RegisterScreen = () => {
     return formatted;
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
+    // Validação dos campos obrigatórios
     if (
       !name ||
       !surname ||
@@ -68,16 +71,19 @@ const RegisterScreen = () => {
       return;
     }
 
+    // Validação do CPF (mínimo 14 caracteres com máscara aplicada)
     if (cpf.length < 14) {
       Alert.alert("Erro", "CPF inválido!");
       return;
     }
 
+    // Verifica se as senhas são iguais
     if (password !== confirmPassword) {
       Alert.alert("Erro", "As senhas não coincidem!");
       return;
     }
 
+    // Verifica se o usuário aceitou os Termos de Uso
     if (!isChecked) {
       Alert.alert(
         "Erro",
@@ -86,8 +92,30 @@ const RegisterScreen = () => {
       return;
     }
 
-    Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-    router.replace("/welcome");
+    try {
+      // Chama a função register do contexto com o objeto completo
+      await register({
+        name,
+        surname,
+        dob,
+        phone,
+        cpf,
+        email,
+        password,
+      });
+
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+
+      // Redireciona para a tela de login
+      router.replace("/auth/login");
+    } catch (error) {
+      Alert.alert(
+        "Erro",
+        error instanceof Error
+          ? error.message
+          : "Falha no cadastro. Tente novamente."
+      );
+    }
   };
 
   return (

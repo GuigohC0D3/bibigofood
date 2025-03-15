@@ -10,7 +10,7 @@ export default function PreloadingScreen() {
     console.log("preloading iniciado...");
 
     setTimeout(() => {
-      console.log("REdirecionando para Welcome...");
+      console.log("Redirecionando para Welcome...");
       router.replace("/welcome"); // Redireciona para a tela de Boas-Vindas
     }, 10000);
   }, []);
