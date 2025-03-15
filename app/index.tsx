@@ -3,6 +3,8 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import LottieView from "lottie-react-native";
+import { AuthProvider } from "./auth/authContext"; // Caminho correto
+
 
 export default function PreloadingScreen() {
   const router = useRouter();

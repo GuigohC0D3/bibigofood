@@ -15,7 +15,6 @@ import { useAuth } from "../auth/authContext";
 const RegisterScreen = () => {
   const router = useRouter();
   const { register } = useAuth();
-
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [dob, setDob] = useState("");
@@ -73,23 +72,20 @@ const RegisterScreen = () => {
 
     // Validação do CPF (mínimo 14 caracteres com máscara aplicada)
     if (cpf.length < 14) {
-      Alert.alert("Erro", "CPF inválido!");
-      return;
+        Alert.alert("Erro", "CPF inválido!");
+        return;
     }
 
     // Verifica se as senhas são iguais
     if (password !== confirmPassword) {
-      Alert.alert("Erro", "As senhas não coincidem!");
-      return;
+        Alert.alert("Erro", "As senhas não coincidem!");
+        return;
     }
 
     // Verifica se o usuário aceitou os Termos de Uso
     if (!isChecked) {
-      Alert.alert(
-        "Erro",
-        "Você precisa aceitar os Termos de Uso para continuar."
-      );
-      return;
+        Alert.alert("Erro", "Você precisa aceitar os Termos de Uso para continuar.");
+        return;
     }
 
     try {
