@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "reac
 import { useRouter } from "expo-router";
 import React from "react";
 import { useAuth } from "../auth/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -21,6 +22,26 @@ export default function LoginScreen() {
             router.replace("/homepage");
         } catch (error) {
             Alert.alert("Erro", error instanceof Error ? error.message : "Credenciais inválidas!");
+        }
+    };
+
+    const handleSkipLogin = async () => {
+        try {
+            const usersJson = await AsyncStorage.getItem("users");
+            let users = usersJson ? JSON.parse(usersJson) : {};
+
+            // Criar usuário de teste caso ele não exista
+            if (!users["teste@email.com"]) {
+                users["teste@email.com"] = { email: "teste@email.com", password: "123456" };
+                await AsyncStorage.setItem("users", JSON.stringify(users));
+                console.log("Usuário de teste criado!");
+            }
+
+            // Agora tenta logar com o usuário de teste
+            await login("teste@email.com", "123456");
+            router.replace("/homepage");
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível pular o login.");
         }
     };
 
@@ -53,6 +74,13 @@ export default function LoginScreen() {
             <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
+
+            {/* Botão de Skip Login para debug */}
+            {__DEV__ && (
+                <TouchableOpacity style={styles.skipButton} onPress={handleSkipLogin}>
+                    <Text style={styles.skipButtonText}>Pular Login (Debug)</Text>
+                </TouchableOpacity>
+            )}
 
             {/* Atalhos de Cadastro e Esqueci a Senha */}
             <View style={styles.linksContainer}>
@@ -103,6 +131,19 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "#FFF",
         fontSize: 16,
+        fontWeight: "bold",
+    },
+    skipButton: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: "#999",
+        borderRadius: 8,
+        alignItems: "center",
+        width: "100%",
+    },
+    skipButtonText: {
+        color: "#fff",
+        fontSize: 14,
         fontWeight: "bold",
     },
     linksContainer: {

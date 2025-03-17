@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "424033069608",
+    "project_id": "bibigofood-bb1df",
+    "storage_bucket": "bibigofood-bb1df.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424033069608:android:ed53446f6ae5fbd0b4e31d",
+        "android_client_info": {
+          "package_name": "com.meuapp.delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO8xLmdC1zrzTYhPdLEBrKSVPtsm7AeGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
